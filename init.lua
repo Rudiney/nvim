@@ -126,6 +126,10 @@ local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<Leader>y', builtin.find_files, {})
 --- Live grep with <Leader>+f
 vim.keymap.set('n', '<Leader>f', builtin.live_grep, {})
+-- Live grep in the current directory with <Leader>+F
+vim.keymap.set('n', '<Leader>F', ':Telescope live_grep search_dirs=%:p:h<CR>', { silent = true, remap = false })
+--- buffers with <Leader>+b
+vim.keymap.set('n', '<Leader>b', builtin.buffers, {})
 --- " to open registers 
 vim.keymap.set('n', '"', builtin.registers, {})
 
