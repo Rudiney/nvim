@@ -40,7 +40,7 @@ vim.call('plug#begin')
 vim.call('plug#end')
 
 -- remap leader to <Space>
-vim.keymap.set("n", " ", "<Nop>", { silent = true, remap = false })
+-- vim.keymap.set("n", " ", "<Nop>", { silent = true, remap = false })
 vim.g.mapleader = " "
 
 -- General settings
@@ -78,8 +78,8 @@ vim.opt.foldmethod = 'indent'
 vim.opt.foldlevel =  10
 
 -- Handy save & quit shortcuts with <Leader> + s and <Leader> + q
-vim.keymap.set({"n", "v", "i"}, "<Leader>s", ":w<CR>", { silent = true, remap = false })
-vim.keymap.set({"n", "v", "i"}, "<Leader>q", ":q<CR>", { silent = true, remap = false })
+vim.keymap.set("n", "<Leader>s", ":w<CR>", { silent = true, remap = false })
+vim.keymap.set("n", "<Leader>q", ":q<CR>", { silent = true, remap = false })
 
 -- Open a vsplit with <Leader>+t
 vim.keymap.set("n", "<Leader>t", ":vsp<CR>", { silent = true, remap = false })
@@ -130,7 +130,7 @@ vim.keymap.set('n', '<Leader>f', builtin.live_grep, {})
 vim.keymap.set('n', '"', builtin.registers, {})
 
 -- Open lazygit with <Leader>gg
-vim.keymap.set({"i", "n"}, "<Leader>gg", ":LazyGit<CR>", { silent = true, remap = false })
+vim.keymap.set('n', '<Leader>gg', ':LazyGit<CR>', { silent = true, remap = false })
 
 -- Status line
 require('lualine').setup()
