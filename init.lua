@@ -6,7 +6,13 @@ vim.g.loaded_netrw       = 1
 vim.g.loaded_netrwPlugin = 1
 
 vim.call('plug#begin')
-  Plug('tanvirtin/monokai.nvim')
+  -- Themes
+  Plug('sheerun/vim-polyglot')
+  -- Plug('tanvirtin/monokai.nvim')
+  -- Plug('ofirgall/ofirkai.nvim')
+  -- Plug('carakan/new-railscasts-theme')
+  -- Plug('sickill/vim-monokai')
+  Plug('Mofiqul/dracula.nvim')
 
   -- change the default behavior of yank on deleting
   Plug('tpope/vim-repeat')
@@ -47,6 +53,7 @@ vim.g.mapleader = " "
 vim.opt.encoding = "utf-8"
 vim.opt.ruler = true
 vim.opt.showcmd = false
+vim.opt.wrap = false
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.shiftround = true
@@ -78,30 +85,42 @@ vim.opt.foldmethod = 'indent'
 vim.opt.foldlevel =  10
 
 -- Handy save & quit shortcuts with <Leader> + s and <Leader> + q
-vim.keymap.set("n", "<Leader>s", ":w<CR>", { silent = true, remap = false })
-vim.keymap.set("n", "<Leader>q", ":q<CR>", { silent = true, remap = false })
+vim.keymap.set("n", "<Leader>s", ":w<CR>", {})
+vim.keymap.set("n", "<Leader>q", ":q<CR>", {})
 
 -- Open a vsplit with <Leader>+t
-vim.keymap.set("n", "<Leader>t", ":vsp<CR>", { silent = true, remap = false })
+vim.keymap.set("n", "<Leader>t", ":vsp<CR>", {})
 
 -- Move a line down with option + j
 vim.keymap.set("n", "∆", ":m .+1<CR>==", { silent = true, remap = false })
-vim.keymap.set("i", "∆", "<Esc>:m .+1<CR>==gi", { silent = true, remap = false })
+vim.keymap.set("i", "∆", "<Esc>:m .+1<CR>==gi", {})
 
 -- Move a line down with option + k
 vim.keymap.set("n", "˚", ":m .-2<CR>==", { silent = true, remap = false })
-vim.keymap.set("i", "˚", "<Esc>:m .-2<CR>==gi", { silent = true, remap = false })
+vim.keymap.set("i", "˚", "<Esc>:m .-2<CR>==gi", {})
 
 -- use Ctrl + hjkl to move between windows
-vim.keymap.set({"n", "v", "i"}, "<C-j>", "<C-w>j", { silent = true, remap = false })
-vim.keymap.set({"n", "v", "i"}, "<C-k>", "<C-w>k", { silent = true, remap = false })
-vim.keymap.set({"n", "v", "i"}, "<C-h>", "<C-w>h", { silent = true, remap = false })
-vim.keymap.set({"n", "v", "i"}, "<C-l>", "<C-w>l", { silent = true, remap = false })
+vim.keymap.set({"n", "v", "i"}, "<C-j>", "<C-w>j", {})
+vim.keymap.set({"n", "v", "i"}, "<C-k>", "<C-w>k", {})
+vim.keymap.set({"n", "v", "i"}, "<C-h>", "<C-w>h", {})
+vim.keymap.set({"n", "v", "i"}, "<C-l>", "<C-w>l", {})
+
+-- <F9> run the current test file 
+vim.keymap.set({"n", "v", "i"}, "<F9>", ":!bin/rails test % <CR>", {})
+-- <F10> run the current test at the current line!
+vim.keymap.set({"n", "v", "i"}, "<F10>", ":exec '!bin/rails test '.expand('%').':'.line('.') <CR>", {})
+
+-- Rubocop shortcuts
+vim.keymap.set("n", "<Leader>r", ":!rubocop % <CR>", {})
+vim.keymap.set("n", "<Leader>R", ":!rubocop -A % <CR>", {})
 
 -------- START: plugins config:
 
 -- Theme
-require('monokai').setup { palette = require('monokai').soda }
+-- require('monokai').setup { palette = require('monokai').soda }
+-- require('new-railscasts-theme').setup()
+-- vim.cmd("color monokai")
+vim.cmd("colorscheme dracula")
 
 -- nvim-tree
 require("nvim-tree").setup({
@@ -137,7 +156,20 @@ vim.keymap.set('n', '"', builtin.registers, {})
 vim.keymap.set('n', '<Leader>gg', ':LazyGit<CR>', { silent = true, remap = false })
 
 -- Status line
-require('lualine').setup()
+require('lualine').setup({
+  sections = {
+    lualine_c = {
+      {
+        'filename',
+        file_status = true,
+        newfile_status = false,
+        path = 4,
+      }
+    },
+    lualine_x = { 'filetype' },
+    lualine_y = { },
+  },
+})
 
 require("copilot").setup({
   suggestion = {
