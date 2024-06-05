@@ -42,6 +42,8 @@ vim.call('plug#begin')
   Plug('windwp/nvim-autopairs')
   Plug('zbirenbaum/copilot.lua')
   Plug('iamcco/markdown-preview.nvim', { ['do'] = 'cd app && npx --yes yarn install' })
+  Plug('mattn/emmet-vim')
+  Plug('vim-test/vim-test')
 
 vim.call('plug#end')
 
@@ -105,10 +107,17 @@ vim.keymap.set({"n", "v", "i"}, "<C-k>", "<C-w>k", {})
 vim.keymap.set({"n", "v", "i"}, "<C-h>", "<C-w>h", {})
 vim.keymap.set({"n", "v", "i"}, "<C-l>", "<C-w>l", {})
 
+-- <F7> run the current rspec test file
+-- vim.keymap.set({"n", "v", "i"}, "<F7>", ":terminal bin/rspec % <CR>", {})
+-- <F8> run the current rspec test at the current line!
+-- vim.keymap.set({"n", "v", "i"}, "<F8>", ":terminal echo 'bin/rspec '.expand('%').':'.line('.') <CR>", {})
 -- <F9> run the current test file 
-vim.keymap.set({"n", "v", "i"}, "<F9>", ":!bin/rails test % <CR>", {})
+--
+-- Setting the test runner as 'm' to run the test with minitest
+vim.cmd("let g:test#ruby#minitest#executable = 'm'")
+vim.keymap.set({"n", "v", "i"}, "<F9>", ":TestFile <CR>", {})
 -- <F10> run the current test at the current line!
-vim.keymap.set({"n", "v", "i"}, "<F10>", ":exec '!bin/rails test '.expand('%').':'.line('.') <CR>", {})
+vim.keymap.set({"n", "v", "i"}, "<F10>", ":TestNearest <CR>", {})
 
 -- Rubocop shortcuts
 vim.keymap.set("n", "<Leader>r", ":!rubocop % <CR>", {})
@@ -149,6 +158,8 @@ vim.keymap.set('n', '<Leader>f', builtin.live_grep, {})
 vim.keymap.set('n', '<Leader>F', ':Telescope live_grep search_dirs=%:p:h<CR>', { silent = true, remap = false })
 --- buffers with <Leader>+b
 vim.keymap.set('n', '<Leader>b', builtin.buffers, {})
+--- Git modified files with <Leader>+g
+vim.keymap.set('n', '<Leader>g', builtin.git_status, {})
 --- " to open registers 
 vim.keymap.set('n', '"', builtin.registers, {})
 
@@ -182,3 +193,10 @@ require("copilot").setup({
 })
 
 require("nvim-autopairs").setup()
+
+-- Emmet
+--- Trigger Emmet with <Leader>+,
+vim.g.user_emmet_leader_key = '<Leader>'
+--- enable emmet only on Normal and Visual mode
+vim.g.user_emmet_mode = 'nv'
+
